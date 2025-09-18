@@ -9,10 +9,6 @@ import java.util.UUID;
 
 @Entity
 public class Patient {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
-
     @NotNull
     private String name;
 
@@ -25,33 +21,21 @@ public class Patient {
     private String address;
 
     @NotNull
-    private LocalDate DateOfBirth;
+    private LocalDate dateOfBirth;
 
     @NotNull
-    private LocalDate registrationDate;
+    private LocalDate registeredDate;
 
-    public UUID getId() {
-        return id;
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
+    public @NotNull String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getEmail() {
@@ -62,19 +46,38 @@ public class Patient {
         this.email = email;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public LocalDate getRegisteredDate() {
+        return registeredDate;
+    }
+
+    public void setRegisteredDate(LocalDate registeredDate) {
+        this.registeredDate = registeredDate;
+    }
+
     public LocalDate getDateOfBirth() {
-        return DateOfBirth;
+        return dateOfBirth;
     }
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
-        DateOfBirth = dateOfBirth;
+        this.dateOfBirth = dateOfBirth;
     }
 
-    public LocalDate getRegistrationDate() {
-        return registrationDate;
+    public UUID getId() {
+        return id;
     }
 
-    public void setRegistrationDate(LocalDate registrationDate) {
-        this.registrationDate = registrationDate;
+    public void setId(UUID id) {
+        this.id = id;
     }
+
+
+
 }

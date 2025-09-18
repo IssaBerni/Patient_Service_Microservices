@@ -11,7 +11,8 @@ import java.util.List;
 
 @Service
 public class PatientService {
-    private final PatientRepository patientRepository;
+
+    private PatientRepository patientRepository;
 
     public PatientService(PatientRepository patientRepository) {
         this.patientRepository = patientRepository;
@@ -19,7 +20,7 @@ public class PatientService {
 
     public List<PatientResponseDTO> getPatients(){
         List<Patient> patients = patientRepository.findAll();
-        return patients.stream().map(
-                PatientMapper::toDTO).toList();
+        return patients.stream().map(PatientMapper::toDTO).toList();
     }
+
 }
