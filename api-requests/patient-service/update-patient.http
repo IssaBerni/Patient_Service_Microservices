@@ -3,8 +3,8 @@ PUT  localhost:4000/patients/123e4567-e89b-12d3-a456-426614174000
 Content-Type: application/json
 
 {
-  "name": "John Doe",
-  "email": "test_updated@example.com",
+  "name": "John Doe updated",
+  "email": "test@example.com",
   "address": "123 main street",
   "birthDate": "1990-01-01"
 }
