@@ -24,7 +24,7 @@ public class BillingServiceGrpcClient {
 
     public BillingResponse createBillingAccount(String patientId, String name, String email){
         BillingRequest request = BillingRequest.newBuilder()
-                .setPatientId(patientId)  // Capital I - this matches the generated method
+                .setPatientId(patientId)
                 .setName(name)
                 .setEmail(email)
                 .build();
