@@ -25,10 +25,23 @@
     </properties>
 
     <dependencies>
-        <!-- Spring Boot starter -->
+        <!-- Spring Boot starter (REST + Web) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- Spring Data JPA for repositories (fixes findAll, save, deleteById etc.) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!-- Database driver (PostgreSQL example, change if using MySQL/H2) -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
         </dependency>
 
         <!-- gRPC dependencies -->
@@ -62,7 +75,7 @@
             <version>${protobuf.version}</version>
         </dependency>
 
-        <!-- javax.annotation fix for Java 21 -->
+        <!-- javax.annotation replacement for Java 21 -->
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
@@ -126,7 +139,7 @@
                 </executions>
             </plugin>
 
-            <!-- Compiler plugin to handle Java 21 -->
+            <!-- Compiler plugin for Java 21 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
