@@ -21,8 +21,13 @@ public class BillingServiceGrpcClient {
         ManagedChannel channel = ManagedChannelBuilder.forAddress(serverAddress, serverPort).usePlaintext().build();
         blockingStub = BillingServiceGrpc.newBlockingStub(channel);
     }
+
     public BillingResponse createBillingAccount(String patientId, String name, String email){
-        BillingRequest request = BillingRequest.newBuilder().setPatientId(patientId).setName(name).setEmail(email).build();
+        BillingRequest request = BillingRequest.newBuilder()
+                .setPatientId(patientId)  // Capital I - this matches the generated method
+                .setName(name)
+                .setEmail(email)
+                .build();
 
         BillingResponse response = blockingStub.createBillingAccount(request);
         log.info("Received response from a billing service via GRPC: {}", response);
