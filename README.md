@@ -1,63 +1,138 @@
-📖 Patient Management Microservices – Documentation
-🚀 Overview
+# 🏥 Patient Management Microservices
 
-This project is a microservices-based patient management system designed to demonstrate the integration of Spring Boot, gRPC, Kafka, PostgreSQL, and API Gateway.
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.0-green)
+![Kafka](https://img.shields.io/badge/Kafka-Event--Streaming-black)
+![gRPC](https://img.shields.io/badge/gRPC-Protobuf-blue)
+![Docker](https://img.shields.io/badge/Docker-Containerization-2496ED)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-336791)
 
-The goal was to build a modular system where services communicate via synchronous (gRPC) and asynchronous (Kafka) channels, providing a scalable foundation for healthcare or analytics platforms.
+## 📖 Overview
+This project is a **microservices-based Patient Management System** that demonstrates how to integrate **Spring Boot, Kafka, gRPC, PostgreSQL, API Gateway, and JWT authentication** in a distributed architecture.  
 
-🏗️ Architecture
-Services:
+It was designed as a practical example for building **scalable, event-driven, and secure microservices**.
 
-Patient Service
+---
 
-Core service handling patient CRUD operations.
+## 🏗️ Architecture
 
-Communicates with Billing Service via gRPC.
+### Services
+- **Patient Service**
+  - Handles patient CRUD operations.
+  - Publishes `PatientEvent` messages to Kafka (`patient` topic).
+  - Calls **Billing Service** via gRPC to create billing accounts.
 
-Publishes PatientEvents to Kafka (patient topic).
+- **Billing Service**
+  - Receives gRPC requests from the Patient Service.
+  - Manages billing accounts for patients.
 
-Billing Service
+- **Analytics Service**
+  - Consumes Kafka `PatientEvent` messages.
+  - Deserializes Protobuf payloads and logs for analytics.
 
-Listens for gRPC requests from the Patient Service.
+- **Auth Service**
+  - Manages users, authentication, and authorization.
+  - Uses **Spring Security + JWT**.
+  - Stores users in PostgreSQL.
 
-Manages billing accounts tied to patients.
+- **API Gateway**
+  - Routes client requests to the appropriate microservice.
+  - Exposes a single entry point for the system.
 
-Analytics Service
+---
 
-Kafka consumer that listens to patient events.
+## ⚙️ Technologies Used
+- **Spring Boot** → Core framework for microservices  
+- **Spring Security + JWT** → Authentication & Authorization  
+- **Spring Data JPA** → Database access  
+- **PostgreSQL** → Relational database  
+- **Kafka** → Event streaming  
+- **gRPC with Protobuf** → High-performance service-to-service communication  
+- **Docker & Docker Compose** → Containerization & orchestration  
+- **Springdoc OpenAPI** → REST API documentation (Swagger UI)  
 
-Deserializes Protobuf messages and logs them for analysis.
+---
 
-Auth Service
+## 📂 Project Structure
 
-Handles user authentication and authorization.
+/auth-service
+├── model/User.java
+├── repository/UserRepository.java
+├── security/JwtUtils.java
+├── controller/AuthController.java
+└── resources/schema.sql
 
-Uses Spring Security + JWT.
+/patient-service
+├── model/Patient.java
+├── dto/PatientRequestDTO.java
+├── dto/PatientResponseDTO.java
+├── service/PatientService.java
+├── kafka/KafkaProducer.java
+└── grpc/BillingServiceGrpcClient.java
 
-Stores users in PostgreSQL.
+/billing-service
+├── grpc/BillingServiceImpl.java
+└── resources/application.yml
 
-API Gateway
+/analytics-service
+├── kafka/KafkaConsumer.java
+└── resources/application.yml
 
-Routes requests to backend services.
+/api-gateway
+└── resources/application.yml
 
-Provides a single entry point for clients.
+/protos
+└── patient_service.proto
 
-⚙️ Technologies
 
-Spring Boot – Core framework
+---
 
-Spring Security + JWT – Authentication & Authorization
+## 🔗 Communication Flow
 
-Spring Data JPA – Database interaction
+1. Client sends a **REST request** → API Gateway.  
+2. Gateway routes the request → **Patient Service**.  
+3. Patient Service:
+   - Saves patient info into **PostgreSQL**.
+   - Calls **Billing Service** via gRPC to create billing account.
+   - Publishes a **PatientEvent** to Kafka.  
+4. **Analytics Service** consumes the Kafka event and logs it.  
+5. **Auth Service** ensures security for protected endpoints.
 
-PostgreSQL – Persistent storage
+---
 
-Kafka – Event streaming
+## 🗄️ Database Schema
 
-gRPC (Protobuf) – Inter-service communication
+### Auth Service (`users` table)
+```sql
+CREATE TABLE IF NOT EXISTS "users" (
+    id UUID PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(50) NOT NULL
+);
 
-Docker & Docker Compose – Containerization and orchestration
 
-Springdoc OpenAPI – API documentation (Swagger UI)
+CREATE TABLE IF NOT EXISTS patients (
+    id UUID PRIMARY KEY,
+    name VARCHAR(255),
+    email VARCHAR(255) UNIQUE NOT NULL,
+    address TEXT,
+    date_of_birth DATE
+);
 
-📂 Project Structure
+
+🛠️ How to Run
+Prerequisites
+
+-Docker & Docker Compose installed
+
+-Maven installed (optional for manual builds)
+
+Steps
+Clone the repository:
+git clone <repo-url>
+cd patient-management
+
+Build & start all services:
+docker-compose up --build
+
+
