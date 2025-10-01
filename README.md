@@ -156,7 +156,3 @@ VALUES ('223e4567-e89b-12d3-a456-426614174006', 'testuser@test.com',
 * Integrate CI/CD pipeline with GitHub Actions ⚙️
 * Add monitoring (Prometheus + Grafana) 📊
 * Deploy to cloud (AWS/GCP/Azure) ☁️
-
-
-
-Do you want me to also add a **visual diagram (ASCII architecture)** 🏗️ showing how the services interact (Recruiters love that)?
