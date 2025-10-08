@@ -141,15 +141,6 @@ VALUES ('223e4567-e89b-12d3-a456-426614174006', 'testuser@test.com',
 
 ---
 
-## 🎉 Fun Extras for Recruiters
-
-* 💬 Built with **clean code practices** (layered architecture)
-* 🧑‍💻 Easily extendable (add new services or roles)
-* 🛠️ Uses industry-standard libraries (Spring Boot, JPA, JWT)
-* 🚀 Shows DevOps familiarity (Docker + Compose)
-
----
-
 ## 🚀 Next Steps (if I continued)
 
 * Add frontend (React/Angular) 🎨
